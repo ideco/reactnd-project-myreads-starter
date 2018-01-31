@@ -17,9 +17,7 @@ class BooksApp extends React.Component {
   }
 
   moveBook = (book, shelf) => {
-    BooksAPI.update(book, shelf).then((books) => {
-      console.log(books)
-    })
+    BooksAPI.update(book, shelf).then(() => this.componentDidMount())
   }
 
   render() {
@@ -28,7 +26,7 @@ class BooksApp extends React.Component {
         <Route exact path="/" render={() => (
           <BookList
             books={this.state.books}
-            onMoveBook={this.state.moveBook}
+            onMoveBook={this.moveBook}
           />
         )} />
         <Route exact path="/search" component={BookSearch} />

@@ -3,7 +3,8 @@ import PropTypes from 'prop-types'
 import Book from './Book'
 export default class BooksGrid extends Component {
     static propTypes = {
-        books: PropTypes.array.isRequired
+        books: PropTypes.array.isRequired,
+        onMoveBook: PropTypes.func.isRequired
     }
     render() {
         const { books, onMoveBook } = this.props

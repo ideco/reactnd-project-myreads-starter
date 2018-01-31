@@ -5,8 +5,10 @@ import { Link } from 'react-router-dom'
 
 export default class BookList extends Component {
     static propTypes = {
-        books: PropTypes.array.isRequired
+        books: PropTypes.array.isRequired,
+        onMoveBook: PropTypes.func.isRequired
     }
+    
     render() {
         const { books, onMoveBook } = this.props
         let booksCurrentlyReading = books.filter((book) => book.shelf === 'currentlyReading')

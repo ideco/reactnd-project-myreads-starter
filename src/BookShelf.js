@@ -5,7 +5,8 @@ import BooksGrid from './BooksGrid'
 export default class BookShelf extends Component {
     static propTypes = {
         title: PropTypes.string.isRequired,
-        books: PropTypes.array.isRequired
+        books: PropTypes.array.isRequired,
+        onMoveBook: PropTypes.func.isRequired
     }
     render() {
         const { title, books, onMoveBook } = this.props

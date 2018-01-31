@@ -3,7 +3,8 @@ import PropTypes from 'prop-types'
 
 export default class Book extends Component {
     static propTypes = {
-        book: PropTypes.object.isRequired
+        book: PropTypes.object.isRequired,
+        onMoveBook: PropTypes.func.isRequired
     }
     render() {
         const { book, onMoveBook } = this.props
@@ -12,7 +13,7 @@ export default class Book extends Component {
                 <div className="book-top">
                     <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${book.imageLinks.thumbnail})` }}></div>
                     <div className="book-shelf-changer">
-                        <select defaultValue={book.shelf}>
+                        <select defaultValue={book.shelf} onChange={(event) => onMoveBook(book, event.target.value)}>
                             <option value="none" disabled>Move to...</option>
                             <option value="currentlyReading">Currently Reading</option>
                             <option value="wantToRead">Want to Read</option>
