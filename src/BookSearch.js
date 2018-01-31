@@ -1,8 +1,16 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types'
+import BooksGrid from './BooksGrid'
 
 export default class BookSearch extends Component {
+    static propTypes = {
+        books: PropTypes.array.isRequired,
+        onQueryChanged: PropTypes.func.isRequired,
+        onMoveBook: PropTypes.func.isRequired
+    }
     render() {
+        const { books, onQueryChanged, onMoveBook } = this.props
         return (
             <div className="search-books">
                 <div className="search-books-bar">
@@ -16,12 +24,19 @@ export default class BookSearch extends Component {
                   However, remember that the BooksAPI.search method DOES search by title or author. So, don't worry if
                   you don't find a specific author or title. Every search is limited by search terms.
                 */}
-                        <input type="text" placeholder="Search by title or author" />
+                        <input
+                            type="text"
+                            placeholder="Search by title or author"
+                            onChange={(event) => onQueryChanged(event.target.value.trim())}
+                        />
 
                     </div>
                 </div>
                 <div className="search-books-results">
-                    <ol className="books-grid"></ol>
+                    <BooksGrid
+                        books={books}
+                        onMoveBook={onMoveBook}
+                    />
                 </div>
             </div>
         )

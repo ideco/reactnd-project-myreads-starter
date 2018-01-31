@@ -7,7 +7,8 @@ import { Route } from 'react-router'
 
 class BooksApp extends React.Component {
   state = {
-    books: []
+    books: [],
+    searchBooks: []
   }
 
   componentDidMount() {
@@ -22,6 +23,10 @@ class BooksApp extends React.Component {
         books: this.mergeUpdate(state.books, updateResult)
       }))
     })
+  }
+
+  searchBooks = (query) => {
+    console.log('Search for ' + query)
   }
 
   mergeUpdate(books, updateResult) {
@@ -61,7 +66,14 @@ class BooksApp extends React.Component {
             onMoveBook={this.moveBook}
           />
         )} />
-        <Route exact path="/search" component={BookSearch} />
+        <Route exact path="/search" render={() => (
+          <BookSearch 
+            books={this.state.searchBooks}
+            onQueryChanged={this.searchBooks}
+            onMoveBook={this.moveBook}
+          />
+        )
+        } />
       </div>
     )
   }
