@@ -6,7 +6,7 @@ export default class BooksGrid extends Component {
         books: PropTypes.array.isRequired
     }
     render() {
-        const { books } = this.props
+        const { books, onMoveBook } = this.props
         return (
             <div>
                 <ol className="books-grid">
@@ -14,6 +14,7 @@ export default class BooksGrid extends Component {
                         <li key={book.id}>
                             <Book 
                                 book={book}
+                                onMoveBook={onMoveBook}
                             />
                         </li>
                     )}

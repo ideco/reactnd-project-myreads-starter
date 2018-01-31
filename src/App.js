@@ -16,12 +16,19 @@ class BooksApp extends React.Component {
     })
   }
 
+  moveBook = (book, shelf) => {
+    BooksAPI.update(book, shelf).then((books) => {
+      console.log(books)
+    })
+  }
+
   render() {
     return (
       <div className="app">
         <Route exact path="/" render={() => (
           <BookList
             books={this.state.books}
+            onMoveBook={this.state.moveBook}
           />
         )} />
         <Route exact path="/search" component={BookSearch} />

@@ -8,7 +8,7 @@ export default class BookList extends Component {
         books: PropTypes.array.isRequired
     }
     render() {
-        const { books } = this.props
+        const { books, onMoveBook } = this.props
         let booksCurrentlyReading = books.filter((book) => book.shelf === 'currentlyReading')
         let booksWantToRead = books.filter((book) => book.shelf === 'wantToRead')
         let booksRead = books.filter((book) => book.shelf === 'read')
@@ -21,14 +21,17 @@ export default class BookList extends Component {
                     <BookShelf
                         title="Currently Reading"
                         books={booksCurrentlyReading}
+                        onMoveBook={onMoveBook}
                     />
                     <BookShelf
                         title="Want To Read"
                         books={booksWantToRead}
+                        onMoveBook={onMoveBook}
                     />
                     <BookShelf
                         title="Read"
                         books={booksRead}
+                        onMoveBook={onMoveBook}
                     />
                 </div>
                 <div className="open-search">
