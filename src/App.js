@@ -24,8 +24,7 @@ class BooksApp extends React.Component {
     })
   }
 
-
-  mergeUpdate = (books, updateResult) => {
+  mergeUpdate(books, updateResult) {
     let bookIdsToShelf = this.mapBookIdsToShelf(updateResult);
     let merged = books.reduce((updatedBooks, book) => {
       if (!(book.id in bookIdsToShelf)) {
