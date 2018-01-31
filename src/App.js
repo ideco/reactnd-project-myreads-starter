@@ -26,7 +26,23 @@ class BooksApp extends React.Component {
   }
 
   searchBooks = (query) => {
-    console.log('Search for ' + query)
+    BooksAPI.search(query).then(foundBooks => {
+      console.log(foundBooks)
+      this.setState((state) => ( {
+        searchBooks: foundBooks.map(book => {
+          book.shelf = this.findShelf(book, state.books)
+          return book
+        })
+      }))
+    })
+  }
+
+  findShelf(searchBook, books) {
+    let bookWithShelf = books.find(book => book.id === searchBook.id)
+    if (bookWithShelf && bookWithShelf.shelf) {
+      return bookWithShelf.shelf
+    }
+    return 'none'
   }
 
   mergeUpdate(books, updateResult) {
@@ -42,7 +58,13 @@ class BooksApp extends React.Component {
       return updatedBooks;
     }, []);
 
-    // todo add newly added books
+    for (let bookId in bookIdsToShelf) {
+      BooksAPI.get(bookId).then((book) => this.setState(state => {
+        
+        return ({
+        books: state.books.concat([book])
+      })}))
+    }
 
     return merged
   }
