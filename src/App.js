@@ -17,21 +17,17 @@ class BooksApp extends React.Component {
   }
 
   moveBook = (book, shelf) => {
-    BooksAPI.update(book, shelf).then(this.processUpdateResult)
+    BooksAPI.update(book, shelf).then(updateResult => {
+      this.setState((state) => ({
+        books: this.mergeUpdate(state.books, updateResult)
+      }))
+    })
   }
 
-  processUpdateResult = (updateResult) => {
-    let bookIdsToShelf = {}
-    for (let shelf in updateResult) {
-      let bookIds = updateResult[shelf]
-      for (let i in bookIds)
-        bookIdsToShelf[bookIds[i]] = shelf
-    }
-    this.setState((state) => ({ books: this.mergeUpdate(state, bookIdsToShelf) }))
-  }
 
-  mergeUpdate = (state, bookIdsToShelf) => {
-    let merged = state.books.reduce((updatedBooks, book) => {
+  mergeUpdate = (books, updateResult) => {
+    let bookIdsToShelf = this.mapBookIdsToShelf(updateResult);
+    let merged = books.reduce((updatedBooks, book) => {
       if (!(book.id in bookIdsToShelf)) {
         // book was removed
         return updatedBooks;
@@ -45,6 +41,16 @@ class BooksApp extends React.Component {
     // todo add newly added books
 
     return merged
+  }
+
+  mapBookIdsToShelf(updateResult) {
+    let bookIdsToShelf = {};
+    for (let shelf in updateResult) {
+      let bookIds = updateResult[shelf];
+      for (let i in bookIds)
+        bookIdsToShelf[bookIds[i]] = shelf;
+    }
+    return bookIdsToShelf;
   }
 
   render() {
