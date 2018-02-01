@@ -3,7 +3,9 @@ import * as BooksAPI from './BooksAPI'
 import './App.css'
 import BookSearch from './BookSearch'
 import BookList from './BookList'
-import { Route } from 'react-router'
+import ErrorPage404 from './ErrorPage404'
+import { Switch, Route } from 'react-router'
+
 
 class BooksApp extends React.Component {
   state = {
@@ -27,15 +29,15 @@ class BooksApp extends React.Component {
 
   searchBooks = (query) => {
     if (!query) {
-      this.setState({searchBooks: []})
+      this.setState({ searchBooks: [] })
       return
     }
     BooksAPI.search(query).then(foundBooks => {
-      if(!foundBooks || foundBooks.error) {
-        this.setState({searchBooks: []})
+      if (!foundBooks || foundBooks.error) {
+        this.setState({ searchBooks: [] })
         return
       }
-      this.setState((state) => ( {
+      this.setState((state) => ({
         searchBooks: foundBooks.map(book => {
           book.shelf = this.findShelf(book, state.books)
           return book
@@ -87,20 +89,23 @@ class BooksApp extends React.Component {
   render() {
     return (
       <div className="app">
-        <Route exact path="/" render={() => (
-          <BookList
-            books={this.state.books}
-            onMoveBook={this.moveBook}
-          />
-        )} />
-        <Route exact path="/search" render={() => (
-          <BookSearch 
-            books={this.state.searchBooks}
-            onQueryChanged={this.searchBooks}
-            onMoveBook={this.moveBook}
-          />
-        )
-        } />
+        <Switch>
+          <Route exact path="/" render={() => (
+            <BookList
+              books={this.state.books}
+              onMoveBook={this.moveBook}
+            />
+          )} />
+          <Route exact path="/search" render={() => (
+            <BookSearch
+              books={this.state.searchBooks}
+              onQueryChanged={this.searchBooks}
+              onMoveBook={this.moveBook}
+            />
+          )
+          } />
+          <Route component={ErrorPage404}/>
+        </Switch>
       </div>
     )
   }
