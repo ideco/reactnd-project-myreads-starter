@@ -59,11 +59,9 @@ class BooksApp extends React.Component {
     }, []);
 
     for (let bookId in bookIdsToShelf) {
-      BooksAPI.get(bookId).then((book) => this.setState(state => {
-        
-        return ({
+      BooksAPI.get(bookId).then((book) => this.setState(state => ({
         books: state.books.concat([book])
-      })}))
+      })))
     }
 
     return merged
