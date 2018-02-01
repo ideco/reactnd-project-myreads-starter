@@ -11,7 +11,7 @@ export default class Book extends Component {
         return (
             <div className="book">
                 <div className="book-top">
-                    <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${book.imageLinks.thumbnail})` }}></div>
+                    <div className="book-cover" style={{ width: 128, height: 193, backgroundImage:`url(${book.imageLinks && book.imageLinks.thumbnail?`${book.imageLinks.thumbnail}`:`http://via.placeholder.com/128x193?text=No%20Cover`})` }}></div>
                     <div className="book-shelf-changer">
                         <select defaultValue={book.shelf} onChange={(event) => onMoveBook(book, event.target.value)}>
                             <option value="none" disabled>Move to...</option>
